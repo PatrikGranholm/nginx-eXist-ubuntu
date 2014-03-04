@@ -1,6 +1,8 @@
 [nginx-eXist-ubuntu](https://github.com/grantmacken/nginx-eXist-ubuntu)
 
 
+
+
 **Nginx** as a reverse proxy and cache server for the eXist-db Application
 Server
 
@@ -46,10 +48,18 @@ If you have a different directory conventions you will have to alter
 To use
 
 1. as sudo ```git clone git://github.com/grantmacken/nginx-eXist-ubuntu.git```
-2. **install** Nginx both on your desktop and server 3. **upstart** make Nginx
-run as a upstart script on your desktop and server 4. **config** install the
-appropriate nginx for each enviroment
-  1. production.sh on your server 2. development.sh on your desktop
+
+2. **install** Nginx both on your desktop and server
+
+3. **upstart** make Nginx
+
+run as a upstart script on your desktop and server
+
+4. **config** install the appropriate nginx for each enviroment
+
+  1. production.sh on your server
+
+  2. development.sh on your desktop
 
 
 
@@ -137,32 +147,46 @@ key to force a reload by-passing your browser cache
 1. To handle multiple 'domains' without reference to the actual domain. We have
 a dynamic 'server name', based on the 'domain name', which generates the $domain
 variable. ```server_name ~^(www\.)?(?<domain>.+)$;``` Multiple site domains or
-sub-domains can be served without changing the nginx configuration. 2. To be
-file extension agnostic. ref:
+sub-domains can be served without changing the nginx configuration.
+
+2. To be file extension agnostic. ref:
 [extension-less-url-the-best-practice-that-time-forgot](http://WWW.codingthewheel.com/archives/extension-less-url-the-best-practice-that-time-forgot/)
  and the classic
 [Cool URIs don't change](http://WWW.w3.org/Provider/Style/URI). Link to this
 page '[http://markup.co.nz/articles/nginx-as-reverse-proxy-for-eXist]' requires
 no 'html' extension. With Nginx rewrites
-  1. http://markup.co.nz //should land at the home page 2. http://markup.co.nz/
-  //should land at the home page 3. http://markup.co.nz/index ///should land at
-  the home page 4. http://markup.co.nz/index.html //should land at the home page
+
+  1. http://markup.co.nz //should land at the home page
+
+  2. http://markup.co.nz/ //should land at the home page 3. http://markup.co.nz/index ///should land at
+  the home page
+
+  4. http://markup.co.nz/index.html //should land at the home page
+
   5. http://markup.co.nz/articles //should land at at the {collection}.index
-  page 6. http://markup.co.nz/articles/ //should land at at the
-  {collection}.index page 7. http://markup.co.nz/articles/index.html //should
-  land at the {collection}.index page 8.
-  http://markup.co.nz/articles/nginx-as-reverse-proxy-for-eXist //should land at
-  {collection}/{resource} page 9.
-  http://markup.co.nz/articles/nginx-as-reverse-proxy-for-eXist.html should land
+  page
+
+  6. http://markup.co.nz/articles/ //should land at at the
+  {collection}.index page
+
+  7. http://markup.co.nz/articles/index.html //should land at the {collection}.index page
+
+  8. http://markup.co.nz/articles/nginx-as-reverse-proxy-for-eXist //should land at
+  {collection}/{resource} page
+
+  9. http://markup.co.nz/articles/nginx-as-reverse-proxy-for-eXist.html should land
   at {collection}/{resource} page
+
 3. To be Cookie-less. Nginx just ignores Jetty generated cookies. As cookies
-'are difficult to cache, and are not needed in most situations' 4. Nginx excels
-at serving files of the disk, so all resources, styles, scripts, images are
+'are difficult to cache, and are not needed in most situations'
+
+4. Nginx excels at serving files of the disk, so all resources, styles, scripts, images are
 handled directly by Nginx bypassing eXist. All images etc are stored in the
 eXist...data/fs directory so our Nginx server root is
 '/usr/local/eXist/webapp/WEB-INF/data/fs/db/apps/$domain'. and Nginx will look
-for our files there. 5. [gZip](https://en.wikipedia.org/wiki/Gzip) compression
-of styles and scripts files when the browser sends a header telling the server
+for our files there.
+
+5. [gZip](https://en.wikipedia.org/wiki/Gzip) compression of styles and scripts files when the browser sends a header telling the server
 it accepts compressed content ``'Accept-Encoding: gzip, deflate'``. On the fly
 compression can be done but also used is the Nginx setting ``gzip_static on``;
 which serves gZipped files directly from disk if available.
@@ -171,19 +195,27 @@ which serves gZipped files directly from disk if available.
 **Local Development Server Requirements**:
 
 1. We do not want the browser caching our constantly changing scripts and
-style-sheets. 2. We do not want the Nginx acting as a Proxy cache cause we want
+style-sheets.
+
+2. We do not want the Nginx acting as a Proxy cache cause we want
 to see our updated content immediately
 
 **Remote Production Server Requirements**:
 
 1. We want to maximize browser caching. We want the nginx server to tell the
 browser what to cache with the use of the associated headers for our static
-content. http://www.slideshare.net/rosstuck/http-and-your-angry-dog
-  1. Expires header set in the future 2. [Cache](
-  http://www.mnot.net/cache_docs/ ) Control on served images and scripts.
-  ```Cache-Control: max-age``` 3. ETag & Last Modified set for static content:
-  images and css 4. Content Length header set 5. We want our server's clock to
-  be accurate other setting header timestamps won't work as expected. To check
+content.  [http-and-your-angry-dog]( http://www.slideshare.net/rosstuck/http-and-your-angry-dog )
+
+  1. Expires header set in the future
+
+  2. [Cache]( http://www.mnot.net/cache_docs/ ) Control on served images and scripts.
+  ```Cache-Control: max-age```
+
+  3. ETag & Last Modified set for static content: images and css
+
+  4. Content Length header set
+
+  5. We want our server's clock to be accurate other setting header timestamps won't work as expected. To check
   if your server's clock is correct. go to
   [redbot](http://redbot.org/?uri=http%3A%2F%2Fwww.markup.co.nz) and enter your
   sites URL. *Note*: If note correct ssh into your server and try using ntpdate
@@ -196,4 +228,3 @@ instead of behaving as a reverse proxy for eXist. When the set time expires then
 Nginx will again act as a reverse proxy for eXist return in a fresh page from
 eXist. The fresh page will also be cached by Nginx an so Nginx will start to
 again serve from its cache.
-
