@@ -218,7 +218,7 @@ content.  [http-and-your-angry-dog]( http://www.slideshare.net/rosstuck/http-and
   5. We want our server's clock to be accurate other setting header timestamps won't work as expected. To check
   if your server's clock is correct. go to
   [redbot](http://redbot.org/?uri=http%3A%2F%2Fwww.markup.co.nz) and enter your
-  sites URL. *Note*: If note correct ssh into your server and try using ntpdate
+  sites URL. *Note*: If not correct ssh into your server and try using ntpdate
   to fetch from a closer local pool. eg. ```ntpdate nz.pool.ntp.org```
 
 2. We want to Nginx to act as proxy cache for content initally generated from
