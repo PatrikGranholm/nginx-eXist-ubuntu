@@ -127,7 +127,7 @@ We have 2 server environments therefore 2 different Nginx configurations
 
 1. A development environment. In the 'config' folder is the bash script
 'development.sh'. make it executable ```chmod +x development.sh``` then run as
-sudo ``` ls -a```.
+sudo ``` ./development.sh```.
 
 2. A production environment.
 
