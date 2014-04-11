@@ -20,7 +20,7 @@ EXIST_DIR='/usr/local/eXist'
 SOURCE_DIR='/usr/local/src'
 BACKUP_DIR="${SOURCE_DIR}/exist-bu"
 DOWNLOAD='http://sourceforge.net/projects/exist/files/latest/download'
-EXIST_VERSION='eXist-db-setup-2.1-rev18721.jar'
+EXIST_VERSION='eXist-db-setup-2.2RC1.jar'
 
 echo ${EXIST_DIR}
 
